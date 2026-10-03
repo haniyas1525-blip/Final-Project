@@ -1,0 +1,58 @@
+-- DATA ANALYST INTERNSHIP TASK 6
+-- Sales Trend Analysis Using Aggregations
+
+-- 1. Check data
+SELECT *
+FROM online_sales
+LIMIT 5;
+
+
+-- 2. Monthly Revenue and Order Volume
+SELECT
+    strftime('%Y', order_date) AS year,
+    strftime('%m', order_date) AS month,
+    SUM(total_amount) AS monthly_revenue,
+    COUNT(*) AS order_volume
+FROM online_sales
+GROUP BY year, month
+ORDER BY year, month;
+
+
+-- 3. Monthly Revenue
+SELECT
+    strftime('%Y-%m', order_date) AS month,
+    SUM(total_amount) AS revenue
+FROM online_sales
+GROUP BY month
+ORDER BY month;
+
+
+-- 4. Monthly Order Volume
+SELECT
+    strftime('%Y-%m', order_date) AS month,
+    COUNT(*) AS order_volume
+FROM online_sales
+GROUP BY month
+ORDER BY month;
+
+
+-- 5. Top 3 Months by Sales
+SELECT
+    strftime('%Y-%m', order_date) AS month,
+    SUM(total_amount) AS revenue
+FROM online_sales
+GROUP BY month
+ORDER BY revenue DESC
+LIMIT 3;
+
+
+-- 6. Total Revenue
+SELECT
+    SUM(total_amount) AS total_revenue
+FROM online_sales;
+
+
+-- 7. Total Orders
+SELECT
+    COUNT(*) AS total_orders
+FROM online_sales;
